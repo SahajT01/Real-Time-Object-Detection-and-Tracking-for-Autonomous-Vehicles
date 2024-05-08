@@ -31,9 +31,9 @@ cell_dim = int(448 / split_size)
 num_classes = len(category_list)
 
 
-def TrainNetwork(num_epochs, split_size, batch_size, load_size, num_boxes, num_classes,
-                 train_img_files_path, train_target_files_path, category_list, model,
-                 device, optimizer, load_model_file, lambda_coord, lambda_no_obj):
+def train_model(num_epochs, split_size, batch_size, load_size, num_boxes, num_classes,
+                train_img_files_path, train_target_files_path, category_list, model,
+                device, optimizer, load_model_file, lambda_coord, lambda_no_obj):
 
     model.train()
 
@@ -115,10 +115,10 @@ def main():
     # Start the training process
     print("###################### STARTING TRAINING ######################")
     print("")
-    TrainNetwork(num_epochs, split_size, batch_size, load_size, num_boxes,
-                 num_classes, train_img_files_path, train_target_files_path,
-                 category_list, model, device, optimizer, load_model_file,
-                 lambda_coord, lambda_no_obj)
+    train_model(num_epochs, split_size, batch_size, load_size, num_boxes,
+                num_classes, train_img_files_path, train_target_files_path,
+                category_list, model, device, optimizer, load_model_file,
+                lambda_coord, lambda_no_obj)
 
 
 if __name__ == "__main__":
