@@ -4,7 +4,7 @@ import torch.nn as nn
 
 class YOLO(nn.Module):
     def __init__(self, split_size, num_boxes, num_classes):
-        super(ModifiedYOLO, self).__init__()
+        super(YOLO, self).__init__()
         self.split_size = split_size
         self.num_boxes = num_boxes
         self.num_classes = num_classes
