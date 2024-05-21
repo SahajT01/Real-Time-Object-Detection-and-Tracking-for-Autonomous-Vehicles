@@ -1,11 +1,9 @@
 /.idea/
 .DS_Store
-<<<<<<< HEAD
 /bdd100k_labels_release/
 /bdd100k/
 /bdd100k_seg/
 *.pt
-=======
 /bdd100k_labels_release/
->>>>>>> parent of 405c5b2 (TRAINED MODEL and inference)
 *.mp4
+*.pyc
