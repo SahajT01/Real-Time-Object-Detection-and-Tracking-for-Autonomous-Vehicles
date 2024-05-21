@@ -1,5 +1,5 @@
 from torchvision import transforms
-from yolo_model import YOLO  # Make sure this points to the correct path
+from yolo_model2 import YOLO  # Make sure this points to the correct path
 from PIL import Image
 import time
 import os

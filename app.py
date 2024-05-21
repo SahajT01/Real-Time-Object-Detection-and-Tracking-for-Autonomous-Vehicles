@@ -20,16 +20,43 @@ def upload_file():
     if file:
         filename = file.filename
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        file.save(file_path)
+        
+        os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+        try:
+            file.save(file_path)
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
         output_file_path = os.path.join(app.config['OUTPUT_FOLDER'], 'output_' + filename)
-        inference.run_inference(file_path, output_file_path)
+        os.makedirs(app.config['OUTPUT_FOLDER'], exist_ok=True)
+        
+        try:
+            print("INFERENCE RAN")
+           #inference.run_inference(file_path, output_file_path)
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
-        return jsonify({"input_video": file_path, "output_video": output_file_path}), 200
+        # Provide URLs for the frontend
+        input_video_url = f"/uploads/{filename}"
+        output_video_url = f"/outputs/output_{filename}"
 
-@app.route('/videos/<filename>')
-def get_video(filename):
-    return send_from_directory(app.config['OUTPUT_FOLDER'], filename)
+        return jsonify({"input_video": input_video_url, "output_video": output_video_url}), 200
+
+@app.route('/uploads/<filename>')
+def get_upload(filename):
+    try:
+        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 404
+
+@app.route('/outputs/<filename>')
+def get_output(filename):
+    try:
+        print(filename)
+        print(app.config['OUTPUT_FOLDER'])
+        return send_from_directory(app.config['OUTPUT_FOLDER'], filename)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 404
 
 if __name__ == '__main__':
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)

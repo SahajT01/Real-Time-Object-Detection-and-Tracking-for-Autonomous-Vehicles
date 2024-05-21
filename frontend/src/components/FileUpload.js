@@ -6,7 +6,8 @@ const FileUpload = () => {
   const [file, setFile] = useState(null);
   const [inputVideo, setInputVideo] = useState('');
   const [outputVideo, setOutputVideo] = useState('');
-
+  console.log(inputVideo);
+  console.log(outputVideo);
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
@@ -21,6 +22,7 @@ const FileUpload = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
+      // Extract URLs from the response and set them
       setInputVideo(response.data.input_video);
       setOutputVideo(response.data.output_video);
     } catch (error) {
@@ -33,7 +35,7 @@ const FileUpload = () => {
       <input type="file" onChange={handleFileChange} />
       <button onClick={handleUpload}>Upload and Process</button>
       {inputVideo && <VideoPlayer src={inputVideo} title="Input Video" />}
-      {outputVideo && <VideoPlayer src={outputVideo} title="Output Video" />}
+      {outputVideo && <VideoPlayer src={"uploads/output.mp4"} title="Output Video" />}
     </div>
   );
 };
