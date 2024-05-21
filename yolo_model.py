@@ -68,7 +68,3 @@ class YOLO(nn.Module):
         x = x.view(x.shape[0], self.split_size, self.split_size,
                    self.num_boxes * 5 + self.num_classes)
         return x
-
-# Example usage
-model = YOLO(split_size=7, num_boxes=2, num_classes=20)
-print(model)
