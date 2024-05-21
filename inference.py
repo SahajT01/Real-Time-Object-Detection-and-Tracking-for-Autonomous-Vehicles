@@ -16,13 +16,13 @@ category_color = [(255,255,0),(255,0,0),(255,128,0),(0,255,255),(255,0,255),
                   (128,255,0),(0,255,128),(255,0,127),(0,255,0),(0,0,255),
                   (127,0,255),(0,128,255),(128,128,128)]
 
-model_weights = "yolo_model.pt"  # Replace with actual path
+model_weights = "yolo2.pt"  # Replace with actual path
 threshold = 0.5
 split_size = 14
 num_boxes = 2
 num_classes = 13
-input_video = "path/to/your/input/video.mp4"  # Replace with actual path
-output_video = "path/to/your/output/video.mp4"  # Replace with actual path
+input_video = "inputvideo.mp4"  # Replace with actual path
+output_video = "outputvideo.mp4"  # Replace with actual path
 
 
 def main():
