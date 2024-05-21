@@ -16,7 +16,7 @@ load_size = 1000
 num_boxes = 2
 lambda_coord = 5
 lambda_no_obj = 0.5
-load_model_file = "yolo.pt"
+load_model_file = "yolo2.pt"
 
 # Dataset parameters
 category_list = ["other vehicle", "pedestrian", "traffic light", "traffic sign",
