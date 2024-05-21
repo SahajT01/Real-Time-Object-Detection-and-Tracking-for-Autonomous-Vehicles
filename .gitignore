@@ -7,3 +7,4 @@
 /bdd100k_labels_release/
 *.mp4
 *.pyc
+frontend/yarn.lock
