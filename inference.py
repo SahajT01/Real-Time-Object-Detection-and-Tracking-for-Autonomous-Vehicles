@@ -1,19 +1,14 @@
 from torchvision import transforms
-from yolo_model import YOLO  # Make sure this points to the correct path
+from yolo_model2 import YOLO  # Make sure this points to the correct path
 from PIL import Image
 import time
-import os
 import cv2
 import torch
 from torchvision.transforms import InterpolationMode
 
-category_list = ["other vehicle", "pedestrian", "traffic light", "traffic sign",
-                 "truck", "train", "other person", "bus", "car", "rider",
-                 "motorcycle", "bicycle", "trailer"]
+category_list = ["other vehicle", "pedestrian", "traffic light", "traffic sign", "truck", "train", "other person", "bus", "car", "rider", "motorcycle", "bicycle", "trailer"]
 
-category_color = [(255,255,0),(255,0,0),(255,128,0),(0,255,255),(255,0,255),
-                  (128,255,0),(0,255,128),(255,0,127),(0,255,0),(0,0,255),
-                  (127,0,255),(0,128,255),(128,128,128)]
+category_color = [(255, 0, 127), (128, 255, 0), (0, 0, 255), (0, 255, 255), (255, 0, 0),  (127, 0, 255), (0, 255, 128), (255, 128, 0), (0, 255, 0), (255, 0, 255),  (0, 128, 255), (128, 128, 128), (255, 255, 0)]
 
 model_weights = "yolo2.pt"  # Replace with actual path
 threshold = 0.5
@@ -22,8 +17,7 @@ num_boxes = 2
 num_classes = 13
 
 def run_inference(input_video, output_video):
-    print("")
-    print("##### YOLO OBJECT DETECTION FOR VIDEOS #####")
+    print("YOLO Object Detection Inference")
     print("")
     print("Loading the model...")
     model = YOLO(split_size=14, num_boxes=2, num_classes=13)  # Adjust parameters as needed
@@ -41,8 +35,7 @@ def run_inference(input_video, output_video):
         transforms.ToTensor(),
     ])
 
-    print("Loading input video file")
-    print("...")
+    print("Loading input video file...")
     vs = cv2.VideoCapture(input_video)
     frame_width = int(vs.get(cv2.CAP_PROP_FRAME_WIDTH))
     frame_height = int(vs.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -76,7 +69,7 @@ def run_inference(input_video, output_video):
             output = model(img_tensor)  # Makes a prediction on the input frame
             curr_fps = int(1.0 / (time.time() - start_time))  # Prediction FPS
             sum_fps += curr_fps
-            print("FPS for YOLO prediction: " + str(curr_fps))
+            print("FPS: " + str(curr_fps))
             print("")
 
         # Extracts the class index with the highest confidence scores
@@ -130,6 +123,6 @@ def run_inference(input_video, output_video):
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 0), 2)
 
         out.write(img)  # Stores the frame with the predictions on a new mp4 file
-    print("Average FPS was: " + str(int(sum_fps / amount_frames)))
+    print("Avg FPS: " + str(int(sum_fps / amount_frames)))
     print("")
 

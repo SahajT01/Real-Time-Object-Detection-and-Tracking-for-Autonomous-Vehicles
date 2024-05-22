@@ -21,6 +21,7 @@ const FileUpload = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
+      // Extract URLs from the response and set them
       setInputVideo(response.data.input_video);
       setOutputVideo(response.data.output_video);
     } catch (error) {
@@ -29,13 +30,28 @@ const FileUpload = () => {
   };
 
   return (
-    <div>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Upload and Process</button>
-      {inputVideo && <VideoPlayer src={inputVideo} title="Input Video" />}
-      {outputVideo && <VideoPlayer src={outputVideo} title="Output Video" />}
+    <div style={styles.container}>
+      <div style={styles.content}>
+        <input type="file" onChange={handleFileChange} />
+        <button onClick={handleUpload}>Upload and Process</button>
+        {inputVideo && <VideoPlayer src={inputVideo} title="Input Video" />}
+        {outputVideo && <VideoPlayer src={outputVideo} title="Output Video" />}
+      </div>
     </div>
   );
+};
+
+const styles = {
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
+    backgroundColor: '#f0f0f0',
+  },
+  content: {
+    textAlign: 'center',
+  },
 };
 
 export default FileUpload;

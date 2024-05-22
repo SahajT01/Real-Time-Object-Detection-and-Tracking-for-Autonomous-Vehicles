@@ -1,8 +1,7 @@
 import torch
 import os
 from dataset import DataLoader
-from utils import MidtoCorner, IoU
-from yolo_model import YOLO
+from yolo_model2 import YOLO
 
 test_img_path = "bdd100k/bdd100k/images/100k/val/"
 test_target_path = "bdd100k_labels_release/bdd100k/labels/bdd100k_labels_images_val.json"
@@ -25,10 +24,34 @@ category_list = ["other vehicle", "pedestrian", "traffic light", "traffic sign",
 cell_dim = int(448/split_size)
 num_classes = len(category_list)
 
+def IoU(target, prediction):
+    i_x1 = max(target[0], prediction[0])
+    i_y1 = max(target[1], prediction[1])
+    i_x2 = min(target[2], prediction[2])
+    i_y2 = min(target[3], prediction[3])
+    intersection = max(0, (i_x2 - i_x1)) * max(0, (i_y2 - i_y1))
+    union = ((target[2] - target[0]) * (target[3] - target[1])) + ((prediction[2] - prediction[0]) *
+                                                                   (prediction[3] - prediction[1])) - intersection
+    iou_value = intersection / union
+    return iou_value
+
+
+def MidtoCorner(mid_box, cell_h, cell_w, cell_dim):
+    centre_x = mid_box[0] * cell_dim + cell_dim * cell_w
+    centre_y = mid_box[1] * cell_dim + cell_dim * cell_h
+    width = mid_box[2] * 448
+    height = mid_box[3] * 448
+    x1 = int(centre_x - width / 2)
+    y1 = int(centre_y - height / 2)
+    x2 = int(centre_x + width / 2)
+    y2 = int(centre_y + height / 2)
+
+    corner_box = [x1, y1, x2, y2]
+    return corner_box
 
 def test_model(test_img_path, test_target_path, category_list, split_size,
                batch_size, load_size, model, cell_dim, num_boxes, num_classes, device,
-               iou_threshold_nms, iou_threshold_map, threshold, use_nms):
+               iou_threshold_nms, threshold, use_nms):
 
     model.eval()
 
@@ -169,13 +192,13 @@ def main():
     model = YOLO(split_size, num_boxes, num_classes).to(device)
 
     # Load model weights
-    print("###################### LOADING YOLO MODEL ######################")
+    print("Loading Model Weights ...")
     print("")
     model_weights = torch.load(load_model_file)
     model.load_state_dict(model_weights["state_dict"])
 
     # Start the validation process
-    print("###################### STARTING TESTING ######################")
+    print("Testing Started ...")
     print("")
     test_model(test_img_path, test_target_path, category_list, split_size,
                batch_size, load_size, model, cell_dim, num_boxes, num_classes, device,
