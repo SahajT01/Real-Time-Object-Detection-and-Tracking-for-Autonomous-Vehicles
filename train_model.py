@@ -1,4 +1,4 @@
-from yolo_model import YOLO
+from yolo_model2 import YOLO
 from loss import Loss
 from dataset import DataLoader
 import torch.optim as optim

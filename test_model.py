@@ -1,7 +1,7 @@
 import torch
 import os
 from dataset import DataLoader
-from yolo_model import YOLO
+from yolo_model2 import YOLO
 
 test_img_path = "bdd100k/bdd100k/images/100k/val/"
 test_target_path = "bdd100k_labels_release/bdd100k/labels/bdd100k_labels_images_val.json"

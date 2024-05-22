@@ -6,13 +6,9 @@ import cv2
 import torch
 from torchvision.transforms import InterpolationMode
 
-category_list = ["other vehicle", "pedestrian", "traffic light", "traffic sign",
-                 "truck", "train", "other person", "bus", "car", "rider",
-                 "motorcycle", "bicycle", "trailer"]
+category_list = ["other vehicle", "pedestrian", "traffic light", "traffic sign", "truck", "train", "other person", "bus", "car", "rider", "motorcycle", "bicycle", "trailer"]
 
-category_color = [(255,255,0),(255,0,0),(255,128,0),(0,255,255),(255,0,255),
-                  (128,255,0),(0,255,128),(255,0,127),(0,255,0),(0,0,255),
-                  (127,0,255),(0,128,255),(128,128,128)]
+category_color = [(255, 0, 127), (128, 255, 0), (0, 0, 255), (0, 255, 255), (255, 0, 0),  (127, 0, 255), (0, 255, 128), (255, 128, 0), (0, 255, 0), (255, 0, 255),  (0, 128, 255), (128, 128, 128), (255, 255, 0)]
 
 model_weights = "yolo2.pt"  # Replace with actual path
 threshold = 0.5
@@ -21,8 +17,7 @@ num_boxes = 2
 num_classes = 13
 
 def run_inference(input_video, output_video):
-    print("")
-    print("YOLO Object Detection")
+    print("YOLO Object Detection Inference")
     print("")
     print("Loading the model...")
     model = YOLO(split_size=14, num_boxes=2, num_classes=13)  # Adjust parameters as needed
