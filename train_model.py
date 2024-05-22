@@ -1,7 +1,6 @@
 from yolo_model import YOLO
 from loss import Loss
 from dataset import DataLoader
-from utils import save_checkpoint
 import torch.optim as optim
 import torch
 import time
@@ -30,6 +29,10 @@ split_size = 14
 cell_dim = int(448 / split_size)
 num_classes = len(category_list)
 
+def save_checkpoint(state, filename):
+    print("=> Saving checkpoint")
+    print("")
+    torch.save(state, filename)
 
 def train_model(num_epochs, split_size, batch_size, load_size, num_boxes, num_classes,
                 train_img_files_path, train_target_files_path, category_list, model,
@@ -113,13 +116,9 @@ def main():
     optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9)
 
     # Start the training process
-    print("###################### STARTING TRAINING ######################")
+    print("Training Started ...")
     print("")
-    train_model(num_epochs, split_size, batch_size, load_size, num_boxes,
-                num_classes, train_img_files_path, train_target_files_path,
-                category_list, model, device, optimizer, load_model_file,
-                lambda_coord, lambda_no_obj)
-
+    train_model(num_epochs, split_size, batch_size, load_size, num_boxes, num_classes, train_img_files_path, train_target_files_path, category_list, model, device, optimizer, load_model_file, lambda_coord, lambda_no_obj)
 
 if __name__ == "__main__":
     main()
